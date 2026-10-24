@@ -1,321 +1,68 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="IP Reputation Checker - kiểm tra IP blacklist và hướng dẫn xử lý">
-<title>IP Cleaner — Reputation Checker</title>
-<style>
-:root{
-  --bg:#f7f8fc;--card:#fff;--text:#142033;--muted:#718096;
-  --line:#e7eaf0;--blue:#175cff;--blue2:#0b43c7;
-  --green:#16a56a;--red:#e5484d;--orange:#e59a19;
-  --shadow:0 18px 50px rgba(24,40,72,.10);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  color:var(--text);background:
-  radial-gradient(circle at 10% 0%,#eaf1ff 0,transparent 30%),
-  linear-gradient(180deg,#f8faff 0,#f7f8fc 100%);
-}
-.wrap{width:min(940px,calc(100% - 28px));margin:auto}
-.top{
-  padding:34px 0 20px;text-align:center;
-}
-.logo{
-  width:66px;height:66px;border-radius:20px;display:grid;place-items:center;
-  margin:auto;background:linear-gradient(145deg,#195fff,#123cbb);
-  color:#fff;font-size:31px;box-shadow:0 12px 30px rgba(23,92,255,.25)
-}
-h1{font-size:31px;margin:14px 0 7px;letter-spacing:-.7px}
-.sub{color:var(--muted);font-size:15px}
-.search{
-  background:var(--card);border:1px solid var(--line);border-radius:24px;
-  padding:10px;display:flex;gap:9px;box-shadow:var(--shadow);margin:18px 0 18px;
-}
-.search input{
-  flex:1;border:0;outline:0;font-size:17px;padding:15px 14px;background:transparent;
-  min-width:0;color:var(--text)
-}
-button{
-  border:0;cursor:pointer;font-weight:800;border-radius:16px;padding:0 22px;
-  background:var(--blue);color:#fff;transition:.18s;min-height:52px
-}
-button:hover{background:var(--blue2);transform:translateY(-1px)}
-button:disabled{opacity:.55;cursor:not-allowed;transform:none}
-.quick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
-.quick button{min-height:38px;padding:0 13px;background:#fff;color:#43516a;border:1px solid var(--line);font-size:12px}
-.panel{
-  background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;
-  box-shadow:var(--shadow);margin-bottom:16px
-}
-.hidden{display:none!important}
-.statusHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.ipTitle{font-size:25px;font-weight:850;word-break:break-all}
-.badge{padding:8px 12px;border-radius:999px;font-size:12px;font-weight:850;white-space:nowrap}
-.badge.clean{background:#e9fbf2;color:#08764b}
-.badge.danger{background:#fff0f0;color:#c3262d}
-.badge.warn{background:#fff7e8;color:#9b6500}
-.meta{color:var(--muted);font-size:13px;margin-top:5px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
-.item{
-  border:1px solid var(--line);border-radius:17px;padding:15px;display:flex;
-  align-items:center;justify-content:space-between;gap:12px;background:#fbfcff
-}
-.item b{font-size:14px}.item span{font-size:13px;font-weight:850}
-.ok{color:var(--green)}.bad{color:var(--red)}.na{color:var(--muted)}
-.note{
-  margin-top:15px;padding:13px 14px;border-radius:14px;background:#f5f7fb;
-  color:#58677f;font-size:13px;line-height:1.55
-}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.actions button.secondary{background:#edf2ff;color:#1748c6}
-.actions button.light{background:#f2f4f8;color:#43516a}
-.guide h2{font-size:19px;margin:0 0 12px}
-.steps{display:grid;gap:10px}
-.step{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:15px}
-.num{
-  flex:0 0 30px;height:30px;border-radius:10px;background:#eaf0ff;color:#175cff;
-  display:grid;place-items:center;font-weight:900
-}
-.step strong{display:block;margin-bottom:3px}.step small{color:var(--muted);line-height:1.5}
-.footer{text-align:center;color:#8b96a8;font-size:12px;padding:28px 0 42px}
-.loader{
-  width:22px;height:22px;border:3px solid #dce6ff;border-top-color:var(--blue);
-  border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.toast{
- position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);
- background:#142033;color:white;padding:12px 16px;border-radius:13px;font-size:13px;
- opacity:0;pointer-events:none;transition:.25s;z-index:5
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(max-width:620px){
-  .search{padding:7px;border-radius:18px}.search input{font-size:15px;padding:13px 10px}
-  .search button{padding:0 15px;min-height:48px}.grid{grid-template-columns:1fr}
-  h1{font-size:27px}.panel{padding:17px;border-radius:19px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB Auto Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: #ffffff; width: 100%; max-width: 400px; padding: 24px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h2 { color: #1877f2; margin-bottom: 20px; font-size: 20px; text-align: center; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 12px; font-weight: 600; color: #65676b; margin-bottom: 6px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccd0d5; border-radius: 6px; font-size: 14px; }
+        button { width: 100%; padding: 12px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        button:hover { background: #166fe5; }
+        .log-box { margin-top: 15px; background: #1e1e1e; color: #00ff66; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 11px; height: 120px; overflow-y: auto; white-space: pre-wrap; }
+    </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <div class="logo">🧹</div>
-    <h1>IP Cleaner</h1>
-    <div class="sub">IP Reputation & Blacklist Checker</div>
-  </header>
 
-  <section class="search">
-    <input id="ipInput" inputmode="decimal" autocomplete="off"
-           placeholder="Nhập IPv4 hoặc IPv6..." aria-label="IP address">
-    <button id="checkBtn" onclick="checkIP()">CHECK IP</button>
-  </section>
+    <div class="card">
+        <h2>⚡ FB Profile Manager</h2>
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="fname" value="Nguyen Tu">
+        </div>
+        <div class="form-group">
+            <label>Last Name (Ký tự ẩn / Trống)</label>
+            <input type="text" id="lname" value=" .kk">
+        </div>
+        <div class="form-group">
+            <label>Contact Email</label>
+            <input type="text" id="email" value="tunguyenanhkai@ybo.com">
+        </div>
+        <button id="run-btn">Gửi Yêu Cầu Đổi Tên Ngầm</button>
 
-  <div class="quick">
-    <button onclick="useMyIP()">🌐 IP hiện tại</button>
-    <button onclick="setExample('8.8.8.8')">8.8.8.8</button>
-    <button onclick="setExample('1.1.1.1')">1.1.1.1</button>
-  </div>
-
-  <section id="result" class="panel hidden">
-    <div class="statusHead">
-      <div>
-        <div id="ipTitle" class="ipTitle">—</div>
-        <div id="meta" class="meta">—</div>
-      </div>
-      <div id="overall" class="badge">—</div>
+        <div id="log" class="log-box">Sẵn sàng nhận lệnh từ Web...</div>
     </div>
 
-    <div id="checks" class="grid"></div>
+    <script>
+        const logBox = document.getElementById('log');
+        function addLog(msg) {
+            const time = new Date().toLocaleTimeString();
+            logBox.innerHTML += `[${time}] ${msg}\n`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
 
-    <div class="note">
-      <b>Lưu ý:</b> kết quả blacklist chỉ phản ánh các DNSBL có thể truy vấn từ trình duyệt.
-      “Clean” không đồng nghĩa IP hoàn toàn có reputation tốt ở mọi dịch vụ.
-    </div>
+        document.getElementById('run-btn').onclick = () => {
+            const data = {
+                action: 'RUN_FB_AUTO',
+                fname: document.getElementById('fname').value,
+                lname: document.getElementById('lname').value,
+                email: document.getElementById('email').value
+            };
 
-    <div class="actions">
-      <button class="secondary" onclick="openSpamhaus()">Mở Spamhaus Checker</button>
-      <button class="light" onclick="copyIP()">Sao chép IP</button>
-      <button class="light" onclick="resetTool()">Kiểm tra IP khác</button>
-    </div>
-  </section>
+            addLog("Đang phát tín hiệu thực thi đến extension/script trên máy...");
+            window.postMessage(data, "*");
+        };
 
-  
-  <section id="cleanPanel" class="panel hidden">
-    <div class="statusHead">
-      <div>
-        <div class="ipTitle">🧹 Clean / Delist</div>
-        <div class="meta">Xử lý listing theo đúng quy trình của nhà cung cấp</div>
-      </div>
-      <div id="cleanBadge" class="badge danger">ACTION NEEDED</div>
-    </div>
-
-    <div id="cleanSummary" class="note" style="margin-top:18px"></div>
-
-    <div id="cleanActions" class="steps" style="margin-top:14px"></div>
-
-    <div class="actions">
-      <button class="secondary" id="removalBtn" onclick="openRemoval()">OPEN REMOVAL PAGE</button>
-      <button class="light" onclick="checkIP()">↻ CHECK AGAIN</button>
-    </div>
-
-    <div class="note">
-      <b>Không thể xóa blacklist trực tiếp bằng JavaScript.</b>
-      Nút Clean chỉ mở đúng quy trình removal/delist và hướng dẫn xử lý nguyên nhân.
-      Sau khi nhà cung cấp gỡ listing, hãy bấm <b>CHECK AGAIN</b>.
-    </div>
-  </section>
-
-<section class="panel guide">
-    <h2>🛠 Nếu IP đang bị blacklist</h2>
-    <div class="steps">
-      <div class="step"><div class="num">1</div><div><strong>Xác định danh sách</strong><small>Xem IP đang bị liệt kê ở blacklist/DNSBL nào và đọc lý do.</small></div></div>
-      <div class="step"><div class="num">2</div><div><strong>Xử lý nguyên nhân</strong><small>Kiểm tra máy chủ, mail server, tài khoản, malware hoặc nguồn traffic bất thường.</small></div></div>
-      <div class="step"><div class="num">3</div><div><strong>Gửi yêu cầu delist</strong><small>Làm theo quy trình của chính tổ chức quản lý blacklist. Tool này không thể tự xóa dữ liệu của họ.</small></div></div>
-      <div class="step"><div class="num">4</div><div><strong>Check lại</strong><small>Sau khi xử lý, quay lại đây để kiểm tra reputation lần nữa.</small></div></div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    IP Cleaner • Client-side tool • Không giả kết quả blacklist
-  </footer>
-</div>
-<div id="toast" class="toast"></div>
-
-<script>
-const LISTS = [
-  {name:"Spamhaus ZEN", zone:"zen.spamhaus.org"},
-  {name:"SpamCop", zone:"bl.spamcop.net"},
-  {name:"Barracuda", zone:"b.barracudacentral.org"}
-];
-
-function isIPv4(ip){
-  const p=ip.trim().split(".");
-  return p.length===4 && p.every(x=>/^\d+$/.test(x)&&+x>=0&&+x<=255);
-}
-function isIPv6(ip){
-  return ip.includes(":") && /^[0-9a-fA-F:]+$/.test(ip) && ip.length<=45;
-}
-function validIP(ip){return isIPv4(ip)||isIPv6(ip)}
-
-function reverseIPv4(ip){return ip.split(".").reverse().join(".")}
-
-async function dohQuery(name){
-  const url="https://dns.google/resolve?name="+encodeURIComponent(name)+"&type=A";
-  const r=await fetch(url,{headers:{accept:"application/dns-json"}});
-  if(!r.ok) throw new Error("DNS query failed");
-  return await r.json();
-}
-
-async function checkDNSBL(ip, zone){
-  if(!isIPv4(ip)) return {state:"na",text:"IPv4 only"};
-  try{
-    const data=await dohQuery(reverseIPv4(ip)+"."+zone);
-    const answers=data.Answer||[];
-    const listed=answers.some(a=>a.type===1);
-    return listed ? {state:"bad",text:"LISTED"} : {state:"ok",text:"CLEAN"};
-  }catch(e){
-    return {state:"na",text:"Unavailable"};
-  }
-}
-
-async function checkIP(){
-  const input=document.getElementById("ipInput");
-  const ip=input.value.trim();
-  if(!validIP(ip)){toast("IP không hợp lệ.");input.focus();return}
-
-  const btn=document.getElementById("checkBtn");
-  btn.disabled=true;btn.innerHTML='<span class="loader"></span>CHECKING';
-  document.getElementById("result").classList.remove("hidden");
-  document.getElementById("ipTitle").textContent=ip;
-  document.getElementById("meta").textContent="Đang kiểm tra DNSBL...";
-  document.getElementById("overall").className="badge warn";
-  document.getElementById("overall").textContent="CHECKING";
-  document.getElementById("checks").innerHTML=LISTS.map(x=>`
-    <div class="item"><b>${x.name}</b><span class="na">Checking...</span></div>`).join("");
-
-  const results=await Promise.all(LISTS.map(x=>checkDNSBL(ip,x.zone)));
-  const checks=document.getElementById("checks");
-  checks.innerHTML=results.map((r,i)=>`
-    <div class="item">
-      <b>${LISTS[i].name}</b>
-      <span class="${r.state}">${r.state==="ok"?"✓ CLEAN":r.state==="bad"?"✕ LISTED":"— "+r.text}</span>
-    </div>`).join("");
-
-  const listed=results.filter(r=>r.state==="bad").length;
-  const unavailable=results.filter(r=>r.state==="na").length;
-  const overall=document.getElementById("overall");
-
-  const cleanPanel=document.getElementById("cleanPanel");
-  if(listed){
-    overall.className="badge danger";overall.textContent="⚠ LISTED";
-    document.getElementById("meta").textContent=`Phát hiện ${listed} blacklist có kết quả LISTED.`;
-    cleanPanel.classList.remove("hidden");
-
-    const listedNames=results.map((r,i)=>r.state==="bad"?LISTS[i].name:null).filter(Boolean);
-    document.getElementById("cleanBadge").textContent="ACTION NEEDED";
-    document.getElementById("cleanSummary").innerHTML=
-      `<b>${ip}</b> đang bị listing trên: <b>${listedNames.join(", ")}</b>.<br>
-       Hãy xử lý nguyên nhân trước khi gửi yêu cầu removal/delist.`;
-
-    const actions=document.getElementById("cleanActions");
-    actions.innerHTML=`
-      <div class="step"><div class="num">1</div><div><strong>Kiểm tra nguyên nhân</strong><small>Đảm bảo IP không phát sinh spam/abuse hoặc dịch vụ bị lạm dụng.</small></div></div>
-      <div class="step"><div class="num">2</div><div><strong>Xử lý nguồn gây listing</strong><small>Nếu là IP mail/server, kiểm tra log, tài khoản, relay, malware và cấu hình gửi thư.</small></div></div>
-      <div class="step"><div class="num">3</div><div><strong>Gửi removal request</strong><small>Mở trang chính thức của nhà cung cấp blacklist và thực hiện yêu cầu gỡ listing.</small></div></div>
-      <div class="step"><div class="num">4</div><div><strong>Kiểm tra lại</strong><small>Sau khi được gỡ, quay lại tool và bấm CHECK AGAIN.</small></div></div>`;
-  }else{
-    cleanPanel.classList.add("hidden");
-    if(unavailable===results.length){
-      overall.className="badge warn";overall.textContent="UNKNOWN";
-      document.getElementById("meta").textContent="Không thể xác minh các DNSBL từ môi trường hiện tại.";
-    }else{
-      overall.className="badge clean";overall.textContent="✓ NO ISSUES";
-      document.getElementById("meta").textContent=`Không phát hiện listing trên ${results.length-unavailable}/${results.length} DNSBL đã kiểm tra.`;
-    }
-  }
-  btn.disabled=false;btn.textContent="CHECK IP";
-}
-
-async function useMyIP(){
-  try{
-    toast("Đang lấy IP hiện tại...");
-    const r=await fetch("https://api.ipify.org?format=json");
-    const d=await r.json();
-    document.getElementById("ipInput").value=d.ip;
-    checkIP();
-  }catch(e){toast("Không lấy được IP hiện tại.");}
-}
-function setExample(ip){document.getElementById("ipInput").value=ip;checkIP()}
-function resetTool(){
-  document.getElementById("result").classList.add("hidden");
-  document.getElementById("cleanPanel").classList.add("hidden");
-  document.getElementById("ipInput").value="";
-  document.getElementById("ipInput").focus();
-}
-async function copyIP(){
-  const ip=document.getElementById("ipTitle").textContent;
-  try{await navigator.clipboard.writeText(ip);toast("Đã sao chép IP.");}
-  catch(e){toast("Không thể sao chép tự động.");}
-}
-function openRemoval(){
-  const ip=document.getElementById("ipTitle").textContent;
-  const listed=LISTS.find((x,i)=>x.name==="Barracuda");
-  // Barracuda's official reputation/removal portal.
-  window.open("https://www.barracudacentral.org/lookups","_blank","noopener");
-}
-function openSpamhaus(){
-  const ip=document.getElementById("ipTitle").textContent;
-  if(!validIP(ip))return;
-  window.open("https://check.spamhaus.org/","_blank","noopener");
-}
-function toast(msg){
-  const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
-  clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2200);
-}
-document.getElementById("ipInput").addEventListener("keydown",e=>{if(e.key==="Enter")checkIP()});
-</script>
+        window.addEventListener("message", (event) => {
+            if (event.data && event.data.action === 'FB_AUTO_LOG') {
+                addLog(event.data.message);
+            }
+        });
+    </script>
 </body>
 </html>
